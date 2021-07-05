@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'ProjectBS1-SvcCon'
+    subscriptionId: 'e3a17487-ae36-49ef-b5cb-ee81ba478b70'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'RG-VS-Test'
+    location: 'North Europe'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/bhupen77/ProjectBS1-RepoPub/main/createwebappbs1/azuredeploybs1.json'
+    overrideParameters: '-projectName ProjectBS1'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
